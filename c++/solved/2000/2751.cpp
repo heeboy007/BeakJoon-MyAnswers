@@ -1,36 +1,31 @@
+#include<iostream>
 #include<algorithm>
 #include<vector>
-#include<iostream>
+#include<sstream>
 
-//without namespace std.
+using namespace std;
 
 int main(){
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    std::vector<int> number_list;
+    int count = 0;
+    vector<int> numbers;
+    cin >> count;
 
-    int N = 0;
-    std::cin >> N;
-
-    for(int i = 0; i < N; i++){
-        //this is a bad practice. unless you need to modifiy the value befroe pushing it.
+    for(int i = 0; i < count; i++){
         int input;
-        std::cin >> input;
-        number_list.push_back(input);
+        cin >> input;
+        numbers.push_back(input);
     }
 
-    //basic sort method.
-    sort(number_list.begin(), number_list.end());
+    sort(numbers.begin(), numbers.end());
+    ostringstream output;
 
-    std::string output;
-
-    for(int n : number_list){
-        char ptr[10]; 
-        sprintf(ptr, "%d\n", n);
-        output.append(ptr);
+    for(int num : numbers){
+        output << num << '\n';
     }
+    cout << output.str();
 
-    std::cout << output;
     return 0;
 }

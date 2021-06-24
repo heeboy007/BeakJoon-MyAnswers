@@ -1,26 +1,31 @@
 #include<iostream>
 #include<queue>
 
+using namespace std;
+
 int main(){
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    std::queue<int> card_queue;
+    int count = 0;
+    queue<int> cards;
+    cin >> count;
 
-    int input = 0;
-    std::cin >> input;
-
-    for(int i = 1; i <= input; i++){
-        card_queue.push(i);
+    for(int i = 1; i <= count; i++){
+        cards.push(i);
     }
 
-    while(card_queue.size() > 1){
-        card_queue.pop();
-        if(card_queue.size() == 1) break;
-        card_queue.push(card_queue.front());
-        card_queue.pop();
+    bool send_back = false;
+    int prev = 0;
+    while(!cards.empty()){
+        prev = cards.front();
+        cards.pop();
+        if(send_back){
+            cards.push(prev);
+        }
+        send_back = !send_back;
     }
+    cout << prev;
 
-    std::cout << card_queue.front();
     return 0;
 }

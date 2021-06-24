@@ -1,30 +1,32 @@
-#include<iostream>
 #include<queue>
+#include<iostream>
+
+using namespace std;
 
 int main(){
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    std::queue<int> queue;
+    int N, K;
+    queue<int> numbers;
+    cin >> N >> K;
 
-    int n = 0, k = 0;
-    std::cin >> n;
-    std::cin >> k;
-
-    for(int i = 1; i <= n; i++){
-        queue.push(i);
+    for(int i = 1; i <= N; i++){
+        numbers.push(i);
     }
 
-    std::cout << '<';
-    for(int i = 0; i < n - 1; i++){
-        for(int j = 0; j < k - 1; j++){
-            queue.push(queue.front());
-            queue.pop();
+    cout << "<";
+    while(!numbers.empty()){
+        for(int i = 1; i < K; i++){
+            int temp = numbers.front();
+            numbers.pop();
+            numbers.push(temp);
         }
-        std::cout << queue.front() << ", ";
-        queue.pop();
+        cout << numbers.front() << (N == 1 ? "" : ", ");
+        numbers.pop();
+        N--;
     }
-    std::cout << queue.front() << '>';
+    cout << ">";
 
     return 0;
 }

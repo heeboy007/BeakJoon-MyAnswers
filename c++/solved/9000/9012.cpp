@@ -1,37 +1,31 @@
 #include<iostream>
-#include<stack>
+
+using namespace std;
 
 int main(){
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    int input = 0;
-    std::cin >> input;
-
-    for(int i = 0; i < input; i++){
-        std::string m_vps;
-        std::cin >> m_vps;
-        std::stack<char> stack;
-        bool is_vps = true;
-
-        for(char ch : m_vps){
-            if(ch == '('){
-                stack.push('(');
-            }
-            else { // ch == ')'
-                if(stack.empty()){
-                    is_vps = false;
-                    break;
-                } else {
-                    stack.pop();
-                }
-            }
+    int count = 0;
+    string str;
+    cin >> count;
+    for(int i = 0; i < count; i++){
+        cin >> str;
+        int stack = 0;
+        for(char c : str){
+            if(c == '(')
+                stack++;
+            else
+                stack--;
+            if(stack < 0)
+                break;
         }
-
-        if(stack.empty() && is_vps)
-            std::cout << "YES\n";
-        else    
-            std::cout << "NO\n";
+        if(stack){
+            cout << "NO\n";
+        } else {
+            cout << "YES\n";
+        }
     }
+
     return 0;
 }

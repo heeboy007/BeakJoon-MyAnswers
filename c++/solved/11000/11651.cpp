@@ -1,34 +1,41 @@
-#include<algorithm>
 #include<iostream>
+#include<sstream>
+#include<algorithm>
 #include<vector>
 
 using namespace std;
 
-bool compare(pair<int, int> a, pair<int, int> b){
-    if(b.first == a.first)
-        return b.second > a.second;
-    else
-        return b.first > a.first;
+typedef pair<int,int> Cord;
+
+bool compare(Cord a, Cord b){
+    if(a.second == b.second){
+        return a.first < b.first;
+    } else {
+        return a.second < b.second;
+    }
 }
 
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int count = 0; 
+    int count;
+    vector<Cord> cords;
     cin >> count;
 
-    vector<pair<int, int>> arr(count);
-
     for(int i = 0; i < count; i++){
-        cin >> arr[i].first;
-        cin >> arr[i].second;
+        Cord p;
+        cin >> p.first >> p.second;
+        cords.push_back(p);
     }
 
-    sort(arr.begin(), arr.end(), compare);
+    sort(cords.begin(), cords.end(), compare);
+    ostringstream output;
 
-    for(pair<int, int> output : arr){
-        cout << output.first << " " << output.second << '\n';
+    for(Cord p : cords){
+        output << p.first << ' ' << p.second << '\n';
     }
+    cout << output.str();
+
     return 0;
 }

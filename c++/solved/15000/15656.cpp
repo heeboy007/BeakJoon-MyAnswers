@@ -1,32 +1,30 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<sstream>
 
 using namespace std;
 
 int N, M;
 int answer[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-bool not_used[10] = {true, true, true, true, true, true, true, true, true, true};
+//bool not_used[10] = {true, true, true, true, true, true, true, true, true, true};
 vector<int> print_numbers;
+ostringstream output;
 
 void backtrack(int depth){
     if(depth == M){
         for(int i : answer){
             if(!i)
                 break;
-            cout << print_numbers[i - 1] << ' ';
+            output << print_numbers[i - 1] << ' ';
         }
-        cout << '\n';
+        output << '\n';
         return;
     }
 
     for(int i = 1; i <= N; i++){
-        if(not_used[i]){
-            answer[depth] = i;
-            not_used[i] = false;
-            backtrack(depth + 1);
-            not_used[i] = true;
-        }
+        answer[depth] = i;
+        backtrack(depth + 1);
     }
 }
 
@@ -44,6 +42,7 @@ int main(){
 
     sort(print_numbers.begin(), print_numbers.end());
     backtrack(0);
+    cout << output.str();
 
     return 0;
 }

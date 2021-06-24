@@ -9,7 +9,7 @@ int answer[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool not_used[10] = {true, true, true, true, true, true, true, true, true, true};
 vector<int> print_numbers;
 
-void backtrack(int depth){
+void backtrack(int depth, int bound){
     if(depth == M){
         for(int i : answer){
             if(!i)
@@ -20,11 +20,11 @@ void backtrack(int depth){
         return;
     }
 
-    for(int i = 1; i <= N; i++){
+    for(int i = bound + 1; i <= N; i++){
         if(not_used[i]){
             answer[depth] = i;
             not_used[i] = false;
-            backtrack(depth + 1);
+            backtrack(depth + 1, i);
             not_used[i] = true;
         }
     }
@@ -43,7 +43,7 @@ int main(){
     }
 
     sort(print_numbers.begin(), print_numbers.end());
-    backtrack(0);
+    backtrack(0, 0);
 
     return 0;
 }
