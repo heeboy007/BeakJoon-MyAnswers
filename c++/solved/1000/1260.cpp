@@ -6,33 +6,75 @@
 
 using namespace std;
 
-bool visited[1001];
-vector<int> list[1001];
+int dots, cons, start;
+bool is_visited[1001];
+int matrix[1001][1001];
+
+/*
+const int MAX = 1000 + 1;
+int N, M, V;
+int adjacent[MAX][MAX];
+bool visited[MAX];
+queue<int> q;
+
+void DFS(int idx)
+{
+        cout << idx << " ";
+        for(int i=1; i<=N; i++)
+                 if (adjacent[idx][i] && !visited[i])
+                 {
+                         visited[i] = 1;
+                         DFS(i);
+                 }
+}
+*/
 
 void dfs(int now){
-    if(visited[now])
-        return;
-    visited[now] = true;
     cout << now << ' ';
-    for(int i = 0; i < list[now].size(); i++){
-        int next = list[now][i];
-        dfs(next);
+    for(int i = 1; i <= dots; i++){
+        if(matrix[now][i] && !is_visited[i]){ //never visited
+            is_visited[i] = true;
+            dfs(i);
+        }
     }
 }
 
-void bfs(int start){
+/*
+void BFS(int idx)
+{
+        q.push(idx);
+        visited[idx] = 1;
+
+        while (!q.empty())
+        {
+                 idx = q.front();
+                 q.pop();
+
+                 cout << idx << " ";
+                 for(int i=1; i<=N; i++)
+                 if (adjacent[idx][i] && !visited[i])
+                 {
+                         visited[i] = 1;
+                         q.push(i);
+                 }
+        }
+}
+*/
+
+void bfs(int idx){
     queue<int> q;
-    q.push(start);
-    visited[start] = true;
+    q.push(idx);
+    is_visited[idx] = true;
     while(!q.empty()){
-        int now = q.front();
+        idx = q.front();
         q.pop();
-        cout << now << ' ';
-        for(int next : list[now]){
-            if(visited[next])
-                continue;
-            q.push(next);
-            visited[next] = true;
+        cout << idx << ' ';
+
+        for(int i = 1; i <= dots; i++){
+            if(matrix[idx][i] && !is_visited[i]){ //never visited
+                is_visited[i] = true;
+                q.push(i);
+            }
         }
     }
 }
@@ -41,26 +83,24 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int m, n, k, count = 0;
-    cin >> n >> m >> k;
-    
-    for(int i = 0; i < m; i++){
-        int x, y;
-        cin >> x >> y;
-        list[x].push_back(y);
-        list[y].push_back(x);
+    cin >> dots >> cons >> start;
+
+    for(int i = 0; i < cons; i++){
+        int from, to;
+        cin >> from >> to;
+
+        matrix[from][to] = 1;
+        matrix[to][from] = 1;
     }
 
-    for(int i = 0; i < n; i++){
-        sort(list[i].begin(), list[i].end());
-    }
+    is_visited[start] = true;
+    dfs(start);
+    cout << endl;
 
-    dfs(k);
-    
-    cout << '\n';
-    memset(visited, 0, sizeof(visited));
-
-    bfs(k);
+    memset(is_visited, false, sizeof(bool) * 1005);
+    bfs(start);
+    cout << endl;
 
     return 0;
 }
+
