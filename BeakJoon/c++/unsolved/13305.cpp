@@ -15,7 +15,13 @@ int main(){
     for(int i = 0; i < n; i++)
         cin >> stops[i];
     
-    
+    int min_cost = stops[0];
+    long long money = 0;
+    for(int i = 1; i < n; i++){
+        money += min_cost * (long long)track[i];
+        min_cost = min(min_cost, stops[i]);
+    }
+    cout << money;
 
     return 0;
 }
