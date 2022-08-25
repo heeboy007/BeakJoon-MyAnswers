@@ -5,7 +5,7 @@ using namespace std;
 //플로이드 와샬이 그런거임????
 //난 다익밖에 몰랐는데 ㅠ
 
-#define INF 1000000
+#define INF 100000000
 
 int n, m;
 int map[105][105];
@@ -19,7 +19,10 @@ int main(){
     while(m--){
       int a, b, cost;
       cin >> a >> b >> cost;
-      map[a][b] = cost;
+      if(map[a][b])
+        map[a][b] = min(map[a][b], cost);
+      else
+        map[a][b] = cost;
     }  
     
     for(int x = 1; x <= n; x++){
@@ -40,9 +43,18 @@ int main(){
         }
       }
     }
+    
+    /*for(int x = 1; x <= n; x++){
+      for(int y = 1; y <= n; y++){
+        cout << map[x][y] << ' ';
+      }
+      cout << '\n';
+    }*/
 
     for(int x = 1; x <= n; x++){
       for(int y = 1; y <= n; y++){
+        if(dist[x][y] == INF)
+            dist[x][y] = 0;
         cout << dist[x][y] << ' ';
       }
       cout << '\n';
