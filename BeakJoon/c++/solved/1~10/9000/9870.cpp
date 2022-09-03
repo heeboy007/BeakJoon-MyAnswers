@@ -22,12 +22,8 @@ int main() {
         for(int j = 1; j <= n; j++){
             if(i == j)
                 dist[i][j] = 0;
-            else if(map[i][j]){
-                if(i <= x || j <= x)
-                    dist[i][j] = map[i][j];
-                else
-                    dist[i][j] = INF;
-            }
+            else if(map[i][j])
+                dist[i][j] = map[i][j];
             else
                 dist[i][j] = INF;
         }
@@ -36,29 +32,27 @@ int main() {
     for(int k = 1; k <= n; k++){
         for(int i = 1; i <= n; i++){
             for(int j = 1; j <= n; j++){
-                if(i <= x || j <= x)
-                    dist[i][j] = min(dist[i][k] + dist[k][j], dist[i][j]);
-                else{
-                    if(k <= x)
-                        dist[i][j] = min(dist[i][k] + dist[k][j], dist[i][j]);
-                }
+                dist[i][j] = min(dist[i][k] + dist[k][j], dist[i][j]);
             }
         }
-    }
-    
-    for(int i = 1; i <= n; i++){
-        for(int j = 1; j <= n; j++){
-            cout << dist[i][j] << ' ';
-        }
-        cout << '\n';
     }
     
     while(q--){
         int a, b;
         cin >> a >> b;
-        if(dist[a][b] != INF){
-            vaild++;
-            vaild_sum += dist[a][b];
+        if(a <= x || b <= x){
+            if(dist[a][b] != INF){
+                vaild++;
+                vaild_sum += dist[a][b];
+            }
+        } else {
+            long long min_res = INF;
+            for(int i = 1; i <= x; i++)
+                min_res = min(dist[a][i] + dist[i][b], min_res);
+            if(min_res != INF){
+                vaild++;
+                vaild_sum += min_res;
+            }
         }
     }
     
