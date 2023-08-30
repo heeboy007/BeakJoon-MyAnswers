@@ -6,11 +6,15 @@
 using namespace std;
 
 int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+  
     int n;
     vector<int> lis, a, pr;
 
     //이게 핵심! 노드 갱신시 이전 인덱스의 정보는 언제나 이어질 수 있는 정보이므로 기록
-    vector<unordered_map<int, int>> hash(1005);
+    vector<unordered_map<int, int>> hash(1000005);
     
     //일단 수열 a를 input 받음
     cin >> n;
